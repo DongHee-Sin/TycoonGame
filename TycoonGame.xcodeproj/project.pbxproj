@@ -13,6 +13,7 @@
 		D00347F127CBB38900BC6868 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D00347EF27CBB38900BC6868 /* Main.storyboard */; };
 		D00347F327CBB38B00BC6868 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D00347F227CBB38B00BC6868 /* Assets.xcassets */; };
 		D00347F627CBB38B00BC6868 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D00347F427CBB38B00BC6868 /* LaunchScreen.storyboard */; };
+		D04A030827CC762000E0FBD1 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04A030727CC762000E0FBD1 /* GameViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		D00347F227CBB38B00BC6868 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D00347F527CBB38B00BC6868 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D00347F727CBB38B00BC6868 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D04A030727CC762000E0FBD1 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +58,32 @@
 		D00347E827CBB38900BC6868 /* TycoonGame */ = {
 			isa = PBXGroup;
 			children = (
-				D00347E927CBB38900BC6868 /* AppDelegate.swift */,
-				D00347EB27CBB38900BC6868 /* SceneDelegate.swift */,
-				D00347ED27CBB38900BC6868 /* ViewController.swift */,
+				D04A030A27CC9D6300E0FBD1 /* App */,
+				D04A030927CC9D5A00E0FBD1 /* ViewController */,
 				D00347EF27CBB38900BC6868 /* Main.storyboard */,
-				D00347F227CBB38B00BC6868 /* Assets.xcassets */,
 				D00347F427CBB38B00BC6868 /* LaunchScreen.storyboard */,
+				D00347F227CBB38B00BC6868 /* Assets.xcassets */,
 				D00347F727CBB38B00BC6868 /* Info.plist */,
 			);
 			path = TycoonGame;
+			sourceTree = "<group>";
+		};
+		D04A030927CC9D5A00E0FBD1 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				D00347ED27CBB38900BC6868 /* ViewController.swift */,
+				D04A030727CC762000E0FBD1 /* GameViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		D04A030A27CC9D6300E0FBD1 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				D00347E927CBB38900BC6868 /* AppDelegate.swift */,
+				D00347EB27CBB38900BC6868 /* SceneDelegate.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,6 +157,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D04A030827CC762000E0FBD1 /* GameViewController.swift in Sources */,
 				D00347EE27CBB38900BC6868 /* ViewController.swift in Sources */,
 				D00347EA27CBB38900BC6868 /* AppDelegate.swift in Sources */,
 				D00347EC27CBB38900BC6868 /* SceneDelegate.swift in Sources */,
