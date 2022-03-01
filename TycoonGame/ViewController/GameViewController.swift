@@ -95,7 +95,7 @@ class GameViewController: UIViewController {
         if finishedBreadCount >= orderCount! {
             // 보유 붕어빵과 스코어 계산
             finishedBreadCount -= orderCount!
-            score = 100 * orderCount!
+            score += 100 * orderCount!
             updateNumberOfBread()
             updateScore()
             
@@ -229,7 +229,7 @@ class GameViewController: UIViewController {
     @objc func customerTimerCounter() {
         // 여기서는 타이머를 체크하고 시간이 지나면 손님 루프를 종료함
         customerCount += 1
-        print(customerCount)
+        print("고객 타이머 : \(customerCount)")
         if customerCount == 20 {
             DispatchQueue.main.async {
                 self.angryImage.isHidden = false
@@ -265,7 +265,6 @@ class GameViewController: UIViewController {
         }
         // 손님이 사라질 때
         if to == true {
-            // 여기가 지금 메인 쓰레드에서 돌고있는데 이 부분을 글로벌큐로 보내주면 해결될까?
             Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { _ in
                 self.customerViewHidden(false)
             })
