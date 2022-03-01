@@ -69,6 +69,11 @@ class GameViewController: UIViewController {
     @IBOutlet weak var redBeansButton: UIButton!
     @IBOutlet weak var handButton: UIButton!
     
+    // 재료 이미지
+    @IBOutlet weak var doughImage: UIImageView!
+    @IBOutlet weak var redBeanImage: UIImageView!
+    @IBOutlet weak var handImage: UIImageView!
+    
     
     
     // 붕어빵 틀 이미지
@@ -96,9 +101,10 @@ class GameViewController: UIViewController {
             score = 100 * orderCount!
             updateNumberOfBread()
             updateScore()
+            customerViewHidden(true)
         }
     }
-    
+
     
     
     
@@ -139,6 +145,8 @@ class GameViewController: UIViewController {
         // 1초 뒤 게임시작
         sleep(1)
         customerViewHidden(false)
+        
+        mainLoop()
     }
     
     
@@ -146,7 +154,66 @@ class GameViewController: UIViewController {
     
     
     
-    // MARK: - 함수 정의
+    // MARK: - 함수
+    
+    
+    // 메인(게임) 타이머
+    var mainTimer: Timer = Timer()
+    var mainCount: Int = 0
+    var mainTimerSwitch: Bool = false
+    
+    @objc func mainTimerCounter() {
+        mainCount = mainCount + 1
+                
+        if(mainCount<=60){
+            print("⏳ 남은 게임 시간 : " + String(60-mainCount) + "초")
+//                   progressView.setProgress(progressView.progress - 0.0167, animated: true)
+        } else{
+            mainTimer.invalidate()
+            mainTimerSwitch = false
+            print("😇 게임 종료")
+//                    // 다음 컨트롤러에 대한 인스턴스 생성
+//                    guard let vc = storyboard?.instantiateViewController(withIdentifier: "GameOverViewController") as? GameOverViewController else { return }
+//                    vc.score = score
+//                    vc.modalPresentationStyle = .fullScreen
+//                    // 화면을 전환하다.
+//                    present(vc, animated: true)
+            }
+        }
+        
+    //메인 루프
+    func mainLoop() {
+        mainTimerSwitch = true
+        let runLoop = RunLoop.current
+        mainTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(mainTimerCounter), userInfo: nil,repeats: true)
+//        customerTimer = Timer.scheduledTimer(timeInterval: 20, target: self, selector: #selector(customerLoop), userInfo: nil, repeats: true)
+        
+        
+        while mainTimerSwitch{
+            runLoop.run(until: Date().addingTimeInterval(0.1))
+        }
+    }
+    
+    
+    
+    
+    // 손님 루프
+    var customerTimer: Timer = Timer()
+    var customerLoopSwitch: Bool = false
+    func customerLoop() {
+        customerLoopSwitch = true
+        customerTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(customerTimerCounter), userInfo: nil, repeats: true)
+    }
+    
+    
+    // 손님 루프 함수
+    @objc func customerTimerCounter() {
+        print("손님시간 타이머")
+    }
+    
+    
+    
+    
     
     // 손님 이미지를 히든처리 / false = 주문수량도 설정
     func customerViewHidden(_ to: Bool) {
@@ -154,6 +221,10 @@ class GameViewController: UIViewController {
         if to == false {
             orderCount = getRandomNumber()
             customerOrder.text = "붕어빵 \(orderCount!)개 주세요."
+            customerLoop()
+        }else {
+            customerTimer.invalidate()
+            customerLoopSwitch = false
         }
     }
     
@@ -268,14 +339,23 @@ class GameViewController: UIViewController {
     
     // 재료 선택 버튼
     @objc func didTouchedIngredientsButton(_ sender: UIButton) {
+        imageHiddenFalse()
         switch sender {
         case doughButton:
             selectedIngredients = .반죽
+            doughImage.isHidden = true
         case redBeansButton:
             selectedIngredients = .팥
+            redBeanImage.isHidden = true
         default:
             selectedIngredients = .손
+            handImage.isHidden = true
         }
+    }
+    func imageHiddenFalse() {
+        doughImage.isHidden = false
+        redBeanImage.isHidden = false
+        handImage.isHidden = false
     }
     
     

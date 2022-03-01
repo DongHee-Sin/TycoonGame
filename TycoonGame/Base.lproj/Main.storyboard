@@ -566,15 +566,18 @@
                         <outlet property="customerOrder" destination="Oot-4p-JLk" id="TWi-wV-T1e"/>
                         <outlet property="customerUIView" destination="7rg-ep-3PX" id="BsR-nQ-WIe"/>
                         <outlet property="doughButton" destination="YiA-DG-odz" id="Bqo-cV-xgL"/>
+                        <outlet property="doughImage" destination="C1K-nN-YxR" id="omd-eI-dbZ"/>
                         <outlet property="finishedBreadLabel" destination="ht1-0H-vme" id="rmi-QC-MZe"/>
                         <outlet property="forRadiusView" destination="h10-P8-tao" id="gtI-1o-5ip"/>
                         <outlet property="handButton" destination="FmA-Xq-sTt" id="L0K-HB-hnz"/>
+                        <outlet property="handImage" destination="bZy-3K-npY" id="QBj-ua-SBx"/>
                         <outlet property="image1" destination="EU1-kC-YQS" id="DA6-LT-ADR"/>
                         <outlet property="image2" destination="rep-cZ-8UD" id="Ep4-kT-s9z"/>
                         <outlet property="image3" destination="qot-K8-HT1" id="rtk-4r-l1V"/>
                         <outlet property="image4" destination="zSN-jp-wyG" id="msa-sV-Hbq"/>
                         <outlet property="image5" destination="L8H-wH-C4F" id="KJT-MH-O1f"/>
                         <outlet property="image6" destination="kxA-fe-nry" id="jom-2l-G1T"/>
+                        <outlet property="redBeanImage" destination="B5g-Vw-QFZ" id="e5F-LE-Hc0"/>
                         <outlet property="redBeansButton" destination="JAk-Y5-HrY" id="HNT-vX-Wh9"/>
                         <outlet property="scoreLabel" destination="GRE-30-igJ" id="ON4-7K-hUn"/>
                     </connections>
