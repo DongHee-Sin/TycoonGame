@@ -53,6 +53,8 @@ class GameViewController: UIViewController {
     // 손님 View
     @IBOutlet weak var customerUIView: UIView!
     @IBOutlet weak var customerOrder: UILabel!
+    @IBOutlet weak var angryImage: UIImageView!
+    
     
     
     // 붕어빵 틀 버튼
@@ -102,6 +104,8 @@ class GameViewController: UIViewController {
             updateNumberOfBread()
             updateScore()
             customerViewHidden(true)
+            customerTimer.invalidate()
+            customerLoopSwitch = false
         }
     }
 
@@ -111,10 +115,6 @@ class GameViewController: UIViewController {
     // MARK: - View Did Load
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // 처음 시작할 때 손님 View 히든처리
-        customerViewHidden(true)
-        
         
         // 붕어빵 버튼들에 함수 연결
         button1.addTarget(self, action: #selector(didTouchedTrayButton(_:)), for: .touchUpInside)
@@ -166,12 +166,12 @@ class GameViewController: UIViewController {
         mainCount = mainCount + 1
                 
         if(mainCount<=60){
-            print("⏳ 남은 게임 시간 : " + String(60-mainCount) + "초")
+            print("남은 시간 : " + String(60-mainCount) + "초")
 //                   progressView.setProgress(progressView.progress - 0.0167, animated: true)
         } else{
             mainTimer.invalidate()
             mainTimerSwitch = false
-            print("😇 게임 종료")
+            print("게임 종료")
 //                    // 다음 컨트롤러에 대한 인스턴스 생성
 //                    guard let vc = storyboard?.instantiateViewController(withIdentifier: "GameOverViewController") as? GameOverViewController else { return }
 //                    vc.score = score
@@ -189,7 +189,7 @@ class GameViewController: UIViewController {
 //        customerTimer = Timer.scheduledTimer(timeInterval: 20, target: self, selector: #selector(customerLoop), userInfo: nil, repeats: true)
         
         
-        while mainTimerSwitch{
+        while mainTimerSwitch {
             runLoop.run(until: Date().addingTimeInterval(0.1))
         }
     }
@@ -199,18 +199,39 @@ class GameViewController: UIViewController {
     
     // 손님 루프
     var customerTimer: Timer = Timer()
+    var customerCount: Int = 0
     var customerLoopSwitch: Bool = false
+    
     func customerLoop() {
-        customerLoopSwitch = true
-        customerTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(customerTimerCounter), userInfo: nil, repeats: true)
+        DispatchQueue.global().async { [self] in
+            customerLoopSwitch = true
+            let runLoop = RunLoop.current
+            customerTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(customerTimerCounter), userInfo: nil, repeats: true)
+            
+            while customerLoopSwitch {
+                runLoop.run(until: Date().addingTimeInterval(0.1))
+            }
+        }
     }
     
     
     // 손님 루프 함수
     @objc func customerTimerCounter() {
-        print("손님시간 타이머")
+        // 여기서는 타이머를 체크하고 시간이 지나면 손님 루프를 종료함
+        customerCount += 1
+        print(customerCount)
+        if customerCount == 20 {
+            DispatchQueue.main.async {
+                print("화남?")
+                self.angryImage.isHidden = false
+            }
+        }
+        if customerCount >= 25 {
+            customerViewHidden(true)
+            customerTimer.invalidate()
+            customerLoopSwitch = false
+        }
     }
-    
     
     
     
@@ -222,9 +243,12 @@ class GameViewController: UIViewController {
             orderCount = getRandomNumber()
             customerOrder.text = "붕어빵 \(orderCount!)개 주세요."
             customerLoop()
-        }else {
-            customerTimer.invalidate()
-            customerLoopSwitch = false
+        }
+        if to == true {
+            print("여기 오나?")
+            Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { _ in
+                self.customerViewHidden(false)
+            })
         }
     }
     
@@ -370,4 +394,21 @@ class GameViewController: UIViewController {
     func updateScore() {
         scoreLabel.text = String(score)
     }
+    
+    
+    // 손님이 화났다 (함수)
+//    func customerIsAngry() {
+//        DispatchQueue.main.async {
+//            self.angryImage.isHidden = false
+//        }
+//    }
+    
+    // 랜덤 주문수량 받아서 Label 업데이트 함수
+//    func updateOrderLabel() {
+//        DispatchQueue.main.async { [self] in
+//            orderCount = getRandomNumber()
+//            customerOrder.text = "붕어빵 \(orderCount!)개 주세요."
+//        }
+//    }
+
 }
