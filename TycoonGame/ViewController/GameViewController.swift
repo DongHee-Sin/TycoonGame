@@ -35,13 +35,7 @@ class GameViewController: UIViewController {
     ]
     
     // 선택된 재료
-    var selectedIngredients: Ingredients? {
-        willSet {
-            if let selected = newValue {
-                print("현재 선택된 재료는 \(selected)입니다.")
-            }
-        }
-    }
+    var selectedIngredients: Ingredients?
     
     
     // Dispatch Queue
@@ -99,13 +93,23 @@ class GameViewController: UIViewController {
     @IBOutlet weak var forRadiusView: UIView!
     @IBAction func giveBreadButton(_ sender: UIButton) {
         if finishedBreadCount >= orderCount! {
+            // 보유 붕어빵과 스코어 계산
             finishedBreadCount -= orderCount!
             score = 100 * orderCount!
             updateNumberOfBread()
             updateScore()
+            
+            // 손님 사라짐 (Hidden true)
             customerViewHidden(true)
+            
+            // 손님 타이머와 루프 해제
             customerTimer.invalidate()
             customerLoopSwitch = false
+            
+            // 화난 표시 히든
+            DispatchQueue.main.async {
+                self.angryImage.isHidden = true
+            }
         }
     }
 
@@ -145,7 +149,6 @@ class GameViewController: UIViewController {
         // 1초 뒤 게임시작
         sleep(1)
         customerViewHidden(false)
-        
         mainLoop()
     }
     
@@ -169,8 +172,13 @@ class GameViewController: UIViewController {
             print("남은 시간 : " + String(60-mainCount) + "초")
 //                   progressView.setProgress(progressView.progress - 0.0167, animated: true)
         } else{
+            // 메인 타이머 부분 해제
             mainTimer.invalidate()
             mainTimerSwitch = false
+            // 고객 타이머 부분 해제
+            customerTimer.invalidate()
+            customerLoopSwitch = false
+            
             print("게임 종료")
 //                    // 다음 컨트롤러에 대한 인스턴스 생성
 //                    guard let vc = storyboard?.instantiateViewController(withIdentifier: "GameOverViewController") as? GameOverViewController else { return }
@@ -224,14 +232,21 @@ class GameViewController: UIViewController {
         print(customerCount)
         if customerCount == 20 {
             DispatchQueue.main.async {
-                print("화남?")
                 self.angryImage.isHidden = false
             }
         }
-        if customerCount >= 25 {
-            customerViewHidden(true)
+        if customerCount == 25 {
+            DispatchQueue.main.async {
+                self.angryImage.isHidden = true
+                self.customerViewHidden(true)
+            }
             customerTimer.invalidate()
             customerLoopSwitch = false
+            
+            // 그냥 히든 시켜버리면 글로벌큐로 작동하니까 문제가 생기는거같아서... 메인큐로 한번 돌려보자
+//            DispatchQueue.main.async {
+//                self.customerViewHidden(true)
+//            }
         }
     }
     
@@ -241,13 +256,16 @@ class GameViewController: UIViewController {
     // 손님 이미지를 히든처리 / false = 주문수량도 설정
     func customerViewHidden(_ to: Bool) {
         customerUIView.isHidden = to
+        // 손님이 등장할 때
         if to == false {
+            customerCount = 0
             orderCount = getRandomNumber()
             customerOrder.text = "붕어빵 \(orderCount!)개 주세요."
             customerLoop()
         }
+        // 손님이 사라질 때
         if to == true {
-            print("여기 오나?")
+            // 여기가 지금 메인 쓰레드에서 돌고있는데 이 부분을 글로벌큐로 보내주면 해결될까?
             Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { _ in
                 self.customerViewHidden(false)
             })
@@ -284,7 +302,6 @@ class GameViewController: UIViewController {
                 globalQueue.async {
                     let runLoop = RunLoop.current
                     Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { _ in
-                        print("준비완료")
                         self.currentTrayState[buttonKey] = .뒤집기2가능
                     })
                     runLoop.run(until: Date().addingTimeInterval(10))
@@ -298,7 +315,6 @@ class GameViewController: UIViewController {
                 globalQueue.async {
                     let runLoop = RunLoop.current
                     Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { _ in
-                        print("준비완료")
                         self.currentTrayState[buttonKey] = .뒤집기3가능
                     })
                     runLoop.run(until: Date().addingTimeInterval(10))
@@ -311,7 +327,6 @@ class GameViewController: UIViewController {
                 globalQueue.async {
                     let runLoop = RunLoop.current
                     Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { _ in
-                        print("준비완료")
                         self.currentTrayState[buttonKey] = .뒤집기4가능
                     })
                     runLoop.run(until: Date().addingTimeInterval(10))
