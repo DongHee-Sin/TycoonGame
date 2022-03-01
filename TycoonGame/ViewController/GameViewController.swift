@@ -183,14 +183,16 @@ class GameViewController: UIViewController {
         
     //메인 루프
     func mainLoop() {
-        mainTimerSwitch = true
-        let runLoop = RunLoop.current
-        mainTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(mainTimerCounter), userInfo: nil,repeats: true)
-//        customerTimer = Timer.scheduledTimer(timeInterval: 20, target: self, selector: #selector(customerLoop), userInfo: nil, repeats: true)
-        
-        
-        while mainTimerSwitch {
-            runLoop.run(until: Date().addingTimeInterval(0.1))
+        DispatchQueue.global().async { [self] in
+            mainTimerSwitch = true
+            let runLoop = RunLoop.current
+            mainTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(mainTimerCounter), userInfo: nil,repeats: true)
+    //        customerTimer = Timer.scheduledTimer(timeInterval: 20, target: self, selector: #selector(customerLoop), userInfo: nil, repeats: true)
+            
+            
+            while mainTimerSwitch {
+                runLoop.run(until: Date().addingTimeInterval(0.1))
+            }
         }
     }
     
