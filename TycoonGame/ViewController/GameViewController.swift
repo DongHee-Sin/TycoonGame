@@ -382,23 +382,27 @@ class GameViewController: UIViewController {
     
     // 재료 선택 버튼
     @objc func didTouchedIngredientsButton(_ sender: UIButton) {
-        imageHiddenFalse()
+        imageBorderCancel()
         switch sender {
         case doughButton:
             selectedIngredients = .반죽
-            doughImage.isHidden = true
+            addBorderToImage(doughImage)
         case redBeansButton:
             selectedIngredients = .팥
-            redBeanImage.isHidden = true
+            addBorderToImage(redBeanImage)
         default:
             selectedIngredients = .손
-            handImage.isHidden = true
+            addBorderToImage(handImage)
         }
     }
-    func imageHiddenFalse() {
-        doughImage.isHidden = false
-        redBeanImage.isHidden = false
-        handImage.isHidden = false
+    func imageBorderCancel() {
+        doughImage.layer.borderWidth = 0
+        redBeanImage.layer.borderWidth = 0
+        handImage.layer.borderWidth = 0
+    }
+    func addBorderToImage(_ to: UIImageView) {
+        to.layer.borderWidth = 2
+        to.layer.borderColor = UIColor.systemBlue.cgColor
     }
     
     
