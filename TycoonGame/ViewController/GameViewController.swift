@@ -185,6 +185,7 @@ class GameViewController: UIViewController {
                 guard let resultVC = self.storyboard?.instantiateViewController(withIdentifier: "GameResultViewContoller") as? GameResultViewContoller else {
                     return
                 }
+                resultVC.score = self.score
                 resultVC.modalPresentationStyle = .overCurrentContext
                 
                 self.present(resultVC, animated: true, completion: nil)

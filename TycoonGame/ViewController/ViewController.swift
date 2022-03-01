@@ -15,7 +15,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var startUIView: UIView!
     @IBOutlet weak var startButton: UIButton!
     
-    
+    @IBOutlet weak var howToUIView: UIView!
+    @IBOutlet weak var howToButton: UIButton!
     
     
 
@@ -24,11 +25,11 @@ class ViewController: UIViewController {
         
         // 게임시작 버튼 addTarget
         startButton.addTarget(self, action: #selector(didTouchedStartButton), for: .touchUpInside)
+        howToButton.addTarget(self, action: #selector(didTouchedHowToButton), for: .touchUpInside)
         
         // 게임시작 버튼 UI 설정
-        startUIView.layer.borderWidth = 3
-        startUIView.layer.borderColor = UIColor.systemPink.cgColor
-        startUIView.layer.cornerRadius = 30
+        viewSetting(startUIView)
+        viewSetting(howToUIView)
     }
 
 
@@ -37,6 +38,21 @@ class ViewController: UIViewController {
             return
         }
         self.present(gameVC, animated: true, completion: nil)
+    }
+    
+    @objc func didTouchedHowToButton() {
+        guard let howToVC = storyboard?.instantiateViewController(withIdentifier: "HowToViewController") as? HowToViewController else {
+            return
+        }
+        howToVC.modalPresentationStyle = .overCurrentContext
+        self.present(howToVC, animated: true, completion: nil)
+    }
+    
+    
+    func viewSetting(_ view: UIView) {
+        view.layer.borderWidth = 3
+        view.layer.borderColor = UIColor.systemPink.cgColor
+        view.layer.cornerRadius = 30
     }
 }
 
