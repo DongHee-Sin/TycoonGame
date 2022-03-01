@@ -247,7 +247,7 @@ class GameViewController: UIViewController {
     
     func customerLoop() {
         DispatchQueue.global().async { [self] in
-            customerLoopSwitch = true
+            customerLoopSwitch = heartPoint >= 1 ? true : false
             let runLoop = RunLoop.current
             customerTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(customerTimerCounter), userInfo: nil, repeats: true)
             
