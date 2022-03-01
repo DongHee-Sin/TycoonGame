@@ -650,6 +650,9 @@
                         <outlet property="forRadiusView" destination="h10-P8-tao" id="gtI-1o-5ip"/>
                         <outlet property="handButton" destination="FmA-Xq-sTt" id="L0K-HB-hnz"/>
                         <outlet property="handImage" destination="bZy-3K-npY" id="QBj-ua-SBx"/>
+                        <outlet property="heart1" destination="EuO-EC-6z6" id="vog-MH-Efl"/>
+                        <outlet property="heart2" destination="Pfa-Y6-yi3" id="J3g-IC-ivc"/>
+                        <outlet property="heart3" destination="nti-Ra-cjA" id="ahg-du-JmN"/>
                         <outlet property="image1" destination="EU1-kC-YQS" id="DA6-LT-ADR"/>
                         <outlet property="image2" destination="rep-cZ-8UD" id="Ep4-kT-s9z"/>
                         <outlet property="image3" destination="qot-K8-HT1" id="rtk-4r-l1V"/>

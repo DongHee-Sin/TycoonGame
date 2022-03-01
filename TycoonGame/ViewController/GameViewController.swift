@@ -13,7 +13,21 @@ class GameViewController: UIViewController {
     
     // MARK: - 전역변수
     // 남은 목숨과 스코어
-    var heartPoint: Int = 3
+    var heartPoint: Int = 3 {
+        willSet {
+            DispatchQueue.main.async { [self] in
+                if newValue == 2 {
+                    heart3.image = UIImage(systemName: "heart")
+                }
+                if newValue == 1 {
+                    heart2.image = UIImage(systemName: "heart")
+                }
+                if newValue == 0 {
+                    heart1.image = UIImage(systemName: "heart")
+                }
+            }
+        }
+    }
     var score: Int = 0
     
     // 고객이 주문한 붕어빵 수량
@@ -44,11 +58,19 @@ class GameViewController: UIViewController {
     
     
     // MARK: - UI 연결
+    
+    // 하트 이미지
+    @IBOutlet weak var heart1: UIImageView!
+    @IBOutlet weak var heart2: UIImageView!
+    @IBOutlet weak var heart3: UIImageView!
+    
+    
+    
+    
     // 손님 View
     @IBOutlet weak var customerUIView: UIView!
     @IBOutlet weak var customerOrder: UILabel!
     @IBOutlet weak var angryImage: UIImageView!
-    
     
     
     // 붕어빵 틀 버튼
@@ -160,6 +182,30 @@ class GameViewController: UIViewController {
     // MARK: - 함수
     
     
+    // 게임 종료하는 함수
+    func gameOver() {
+        // 메인 타이머 해제
+        mainTimer.invalidate()
+        mainTimerSwitch = false
+        
+        // 고객 타이머 해제
+        customerTimer.invalidate()
+        customerLoopSwitch = false
+        
+        print("게임 종료")
+        
+        DispatchQueue.main.async {
+            guard let resultVC = self.storyboard?.instantiateViewController(withIdentifier: "GameResultViewContoller") as? GameResultViewContoller else {
+                return
+            }
+            resultVC.score = self.score
+            resultVC.modalPresentationStyle = .overCurrentContext
+            self.present(resultVC, animated: true, completion: nil)
+        }
+    }
+    
+    
+    
     // 메인(게임) 타이머
     var mainTimer: Timer = Timer()
     var mainCount: Int = 0
@@ -171,27 +217,10 @@ class GameViewController: UIViewController {
         if(mainCount<=60){
             print("남은 시간 : " + String(60-mainCount) + "초")
 //                   progressView.setProgress(progressView.progress - 0.0167, animated: true)
-        } else{
-            // 메인 타이머 부분 해제
-            mainTimer.invalidate()
-            mainTimerSwitch = false
-            // 고객 타이머 부분 해제
-            customerTimer.invalidate()
-            customerLoopSwitch = false
-            
-            print("게임 종료")
-            
-            DispatchQueue.main.async {
-                guard let resultVC = self.storyboard?.instantiateViewController(withIdentifier: "GameResultViewContoller") as? GameResultViewContoller else {
-                    return
-                }
-                resultVC.score = self.score
-                resultVC.modalPresentationStyle = .overCurrentContext
-                
-                self.present(resultVC, animated: true, completion: nil)
-            }
-            }
+        } else {
+            gameOver()
         }
+    }
         
     //메인 루프
     func mainLoop() {
@@ -234,12 +263,12 @@ class GameViewController: UIViewController {
         // 여기서는 타이머를 체크하고 시간이 지나면 손님 루프를 종료함
         customerCount += 1
         print("고객 타이머 : \(customerCount)")
-        if customerCount == 20 {
+        if customerCount == 12 {
             DispatchQueue.main.async {
                 self.angryImage.isHidden = false
             }
         }
-        if customerCount == 25 {
+        if customerCount == 17 {
             DispatchQueue.main.async {
                 self.angryImage.isHidden = true
                 self.customerViewHidden(true)
@@ -247,10 +276,11 @@ class GameViewController: UIViewController {
             customerTimer.invalidate()
             customerLoopSwitch = false
             
-            // 그냥 히든 시켜버리면 글로벌큐로 작동하니까 문제가 생기는거같아서... 메인큐로 한번 돌려보자
-//            DispatchQueue.main.async {
-//                self.customerViewHidden(true)
-//            }
+            // 목숨 1 깎기
+            heartPoint -= 1
+            if heartPoint == 0 {
+                gameOver()
+            }
         }
     }
     
