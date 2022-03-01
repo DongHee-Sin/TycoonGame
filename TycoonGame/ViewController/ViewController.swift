@@ -21,14 +21,22 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         
+        // 게임시작 버튼 addTarget
+        startButton.addTarget(self, action: #selector(didTouchedStartButton), for: .touchUpInside)
         
+        // 게임시작 버튼 UI 설정
         startUIView.layer.borderWidth = 3
         startUIView.layer.borderColor = UIColor.systemPink.cgColor
         startUIView.layer.cornerRadius = 30
     }
 
 
+    @objc func didTouchedStartButton() {
+        guard let gameVC = storyboard?.instantiateViewController(withIdentifier: "GameViewController") as? GameViewController else {
+            return
+        }
+        self.present(gameVC, animated: true, completion: nil)
+    }
 }
 

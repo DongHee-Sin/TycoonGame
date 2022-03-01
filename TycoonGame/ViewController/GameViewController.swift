@@ -180,12 +180,15 @@ class GameViewController: UIViewController {
             customerLoopSwitch = false
             
             print("게임 종료")
-//                    // 다음 컨트롤러에 대한 인스턴스 생성
-//                    guard let vc = storyboard?.instantiateViewController(withIdentifier: "GameOverViewController") as? GameOverViewController else { return }
-//                    vc.score = score
-//                    vc.modalPresentationStyle = .fullScreen
-//                    // 화면을 전환하다.
-//                    present(vc, animated: true)
+            
+            DispatchQueue.main.async {
+                guard let resultVC = self.storyboard?.instantiateViewController(withIdentifier: "GameResultViewContoller") as? GameResultViewContoller else {
+                    return
+                }
+                resultVC.modalPresentationStyle = .overCurrentContext
+                
+                self.present(resultVC, animated: true, completion: nil)
+            }
             }
         }
         

@@ -35,9 +35,6 @@
                                         <rect key="frame" x="0.0" y="0.0" width="248" height="83"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain"/>
-                                        <connections>
-                                            <segue destination="eRc-aQ-vLp" kind="show" id="5Dz-46-U80"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.72992528855484107" blue="0.96062028458492166" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -155,7 +152,6 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="sGi-UX-fcc" secondAttribute="trailing" constant="25" id="8vx-lF-vxm"/>
                                             <constraint firstItem="GRE-30-igJ" firstAttribute="top" secondItem="sGi-UX-fcc" secondAttribute="bottom" constant="30" id="9CO-pu-cDv"/>
@@ -596,6 +592,45 @@
             </objects>
             <point key="canvasLocation" x="844.92753623188412" y="83.705357142857139"/>
         </scene>
+        <!--Game Result View Contoller-->
+        <scene sceneID="XuZ-vk-fUd">
+            <objects>
+                <viewController storyboardIdentifier="GameResultViewContoller" id="oGF-z4-je2" customClass="GameResultViewContoller" customModule="TycoonGame" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mzi-rD-xVu">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="k0k-9C-tzz">
+                                <rect key="frame" x="83" y="266.5" width="248" height="373"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="게임 결과 화면" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qjm-Cr-mQM">
+                                        <rect key="frame" x="75.5" y="176" width="97" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="k0k-9C-tzz" secondAttribute="height" multiplier="1:1.5" id="6ch-M3-9Ab"/>
+                                    <constraint firstItem="qjm-Cr-mQM" firstAttribute="centerY" secondItem="k0k-9C-tzz" secondAttribute="centerY" id="R2q-0C-efG"/>
+                                    <constraint firstItem="qjm-Cr-mQM" firstAttribute="centerX" secondItem="k0k-9C-tzz" secondAttribute="centerX" id="TVx-pn-vJf"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="3ZJ-0Q-mHv"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="k0k-9C-tzz" firstAttribute="width" secondItem="3ZJ-0Q-mHv" secondAttribute="width" multiplier="0.6" id="ReJ-5b-g2G"/>
+                            <constraint firstItem="k0k-9C-tzz" firstAttribute="centerY" secondItem="3ZJ-0Q-mHv" secondAttribute="centerY" id="azc-PB-C8Z"/>
+                            <constraint firstItem="k0k-9C-tzz" firstAttribute="centerX" secondItem="3ZJ-0Q-mHv" secondAttribute="centerX" id="vZC-1T-40Q"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9HS-Ri-t8s" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1667" y="84"/>
+        </scene>
     </scenes>
     <resources>
         <image name="bubble.left.fill" catalog="system" width="128" height="110"/>
@@ -606,7 +641,7 @@
         <image name="붕어빵 빈틀" width="333" height="199"/>
         <image name="빠직 누끼" width="485" height="514"/>
         <image name="손" width="106" height="123"/>
-        <image name="점수판" width="1120" height="1179"/>
+        <image name="점수판" width="1120" height="1178"/>
         <image name="주전자" width="142" height="140"/>
         <image name="첫화면 폰용" width="1490" height="1752"/>
         <image name="팥" width="150" height="130"/>
