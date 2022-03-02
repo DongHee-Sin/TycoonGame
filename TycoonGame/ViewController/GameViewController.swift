@@ -69,6 +69,8 @@ class GameViewController: UIViewController {
     // 전체시간 타이머 : progress view
     @IBOutlet weak var gameTimerProgressView: UIProgressView!
     
+    // 게임 START 이미지
+    @IBOutlet weak var gameStartImage: UIImageView!
     
     
     // 손님 View
@@ -146,12 +148,17 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // START 이미지 히든 false
+        gameStartImage.isHidden = false
+        
+        
         // burnTimer들 배열로 저장
         burnTimers = [burnTimer1, burnTimer2, burnTimer3, burnTimer4, burnTimer5, burnTimer6]
         
         
         // 전체 게임 타이머 progress view 설정
         gameTimerProgressView.transform = gameTimerProgressView.transform.scaledBy(x: 1, y: 1.5)
+        gameTimerProgressView.setProgress(1.0, animated: false)
         
         
         // 붕어빵 버튼들에 함수 연결
@@ -183,6 +190,7 @@ class GameViewController: UIViewController {
         // 1초 뒤 게임시작
         sleep(1)
         customerViewHidden(false)
+        gameStartImage.isHidden = true
         mainLoop()
     }
     
@@ -203,6 +211,9 @@ class GameViewController: UIViewController {
         // 고객 타이머 해제
         customerTimer.invalidate()
         customerLoopSwitch = false
+        
+        
+        
         
         print("게임 종료")
         
@@ -228,6 +239,7 @@ class GameViewController: UIViewController {
                 
         if(mainCount<=100){
             print("남은 시간 : " + String(100-mainCount) + "초")
+            //
             DispatchQueue.main.async { [self] in
                 gameTimerProgressView.setProgress(gameTimerProgressView.progress - 0.01, animated: true)
             }
@@ -276,7 +288,7 @@ class GameViewController: UIViewController {
     @objc func customerTimerCounter() {
         // 여기서는 타이머를 체크하고 시간이 지나면 손님 루프를 종료함
         customerCount += 1
-        print("고객 타이머 : \(customerCount)")
+//        print("고객 타이머 : \(customerCount)")
         if customerCount == 15 {
             DispatchQueue.main.async {
                 self.angryImage.isHidden = false

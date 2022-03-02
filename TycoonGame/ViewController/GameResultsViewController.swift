@@ -16,7 +16,8 @@ class GameResultViewContoller: UIViewController {
     
     
     @IBAction func closeButton(_ sender: UIButton) {
-        dismiss(animated: true, completion: nil)
+//        dismiss(animated: false, completion: nil)
+        self.presentingViewController?.presentingViewController?.dismiss(animated: false, completion: nil)
     }
     
     
