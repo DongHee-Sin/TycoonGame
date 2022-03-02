@@ -142,6 +142,8 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        burnTimers = [burnTimer1, burnTimer2, burnTimer3, burnTimer4, burnTimer5, burnTimer6]
+        
         // 붕어빵 버튼들에 함수 연결
         button1.addTarget(self, action: #selector(didTouchedTrayButton(_:)), for: .touchUpInside)
         button2.addTarget(self, action: #selector(didTouchedTrayButton(_:)), for: .touchUpInside)
@@ -311,9 +313,61 @@ class GameViewController: UIViewController {
     }
     
     
+    // 붕어빵 태우는지 여부 확인하는 타이머
+    var burnTimer1 = Timer()
+    var burnTimer2 = Timer()
+    var burnTimer3 = Timer()
+    var burnTimer4 = Timer()
+    var burnTimer5 = Timer()
+    var burnTimer6 = Timer()
+    var burnTimers: [Timer] = []
+    var burnTimersCount: [Int] = [0, 0, 0, 0, 0, 0]
+    var burnLoopSwitch: [Bool] = [false, false, false, false, false, false]
+    
+    // 붕어빵이 다 익으면 작동할 타이머
+    // 1번째 붕어빵 트레이면 매개변수로 0을 받도록 할것
+    func burnLoop(_ index: Int) {
+        DispatchQueue.global().async { [self] in
+            burnLoopSwitch[index] = true
+            let runLoop = RunLoop.current
+            
+            burnTimers[index] = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(burnTimerCounter(_:)), userInfo: ["index": index], repeats: true)
+            
+            while burnLoopSwitch[index] {
+                runLoop.run(until: Date().addingTimeInterval(0.1))
+            }
+        }
+    }
+    
+    // 타는지 여부 확인할 타이머
+    @objc func burnTimerCounter(_ timer: Timer) {
+        guard let receivedData = timer.userInfo as? Dictionary<String, Int> else {
+            return
+        }
+        let index: Int = receivedData["index"]!
+        
+        burnTimersCount[index] += 1
+        print("\(index+1)번 붕어빵 타는중 ------------------- \(burnTimersCount[index])")
+        if burnTimersCount[index] == 5 {
+            burnLoopSwitch[index] = false
+            burnTimers[index].invalidate()
+            currentTrayState[String(index+1)] = .탐
+        }
+    }
+    
+    // 시간 맞춰서 뒤집으면 burn timer 멈추는 함수
+    func stopBurnTimer(_ index: Int) {
+        burnLoopSwitch[index] = false
+        burnTimers[index].invalidate()
+    }
+    
+    
+    
     // 붕어빵 틀 눌리는 버튼
     @objc func didTouchedTrayButton(_ sender: UIButton) {
         let buttonKey: String = (sender.titleLabel?.text)!
+        let trayIndex: Int = Int(buttonKey)! - 1
+        
         // 현재 붕어빵 틀의 상태를 가져옴
         let trayState: TrayState = currentTrayState[buttonKey]!
         
@@ -334,8 +388,10 @@ class GameViewController: UIViewController {
                 updateTrayImgae(state: .뒤집기1, trayNumber: buttonKey)
                 globalQueue.async {
                     let runLoop = RunLoop.current
-                    Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { _ in
+                    Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { _ in
                         self.currentTrayState[buttonKey] = .뒤집기2가능
+                        // 다 익음과 동시에 burn timer 시작
+                        self.burnLoop(trayIndex)
                     })
                     runLoop.run(until: Date().addingTimeInterval(10))
                 }
@@ -343,35 +399,44 @@ class GameViewController: UIViewController {
             }
         case .뒤집기2가능:
             if selectedIngredients == .손 {
+                // 전단계에서 진행되던 burn timer 멈춤
+                stopBurnTimer(trayIndex)
+                
                 currentTrayState[buttonKey] = .뒤집기2
                 updateTrayImgae(state: .뒤집기2, trayNumber: buttonKey)
                 globalQueue.async {
                     let runLoop = RunLoop.current
-                    Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { _ in
+                    Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { _ in
                         self.currentTrayState[buttonKey] = .뒤집기3가능
+                        self.burnLoop(trayIndex)
                     })
                     runLoop.run(until: Date().addingTimeInterval(10))
                 }
             }
         case .뒤집기3가능:
             if selectedIngredients == .손 {
+                stopBurnTimer(trayIndex)
                 currentTrayState[buttonKey] = .뒤집기3
                 updateTrayImgae(state: .뒤집기3, trayNumber: buttonKey)
                 globalQueue.async {
                     let runLoop = RunLoop.current
-                    Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { _ in
+                    Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { _ in
                         self.currentTrayState[buttonKey] = .뒤집기4가능
+                        self.burnLoop(trayIndex)
                     })
                     runLoop.run(until: Date().addingTimeInterval(10))
                 }
             }
         case .뒤집기4가능:
             if selectedIngredients == .손 {
+                stopBurnTimer(trayIndex)
                 currentTrayState[buttonKey] = .뒤집기4
                 updateTrayImgae(state: .뒤집기4, trayNumber: buttonKey)
+                burnLoop(trayIndex)
             }
         case .뒤집기4:
             if selectedIngredients == .손 {
+                stopBurnTimer(trayIndex)
                 currentTrayState[buttonKey] = .비어있음
                 updateTrayImgae(state: .비어있음, trayNumber: buttonKey)
                 finishedBreadCount += 1
