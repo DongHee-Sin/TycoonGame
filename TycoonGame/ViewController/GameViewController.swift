@@ -66,6 +66,10 @@ class GameViewController: UIViewController {
     
     
     
+    // 전체시간 타이머 : progress view
+    @IBOutlet weak var gameTimerProgressView: UIProgressView!
+    
+    
     
     // 손님 View
     @IBOutlet weak var customerUIView: UIView!
@@ -142,7 +146,13 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // burnTimer들 배열로 저장
         burnTimers = [burnTimer1, burnTimer2, burnTimer3, burnTimer4, burnTimer5, burnTimer6]
+        
+        
+        // 전체 게임 타이머 progress view 설정
+        gameTimerProgressView.transform = gameTimerProgressView.transform.scaledBy(x: 1, y: 1.5)
+        
         
         // 붕어빵 버튼들에 함수 연결
         button1.addTarget(self, action: #selector(didTouchedTrayButton(_:)), for: .touchUpInside)
@@ -216,9 +226,11 @@ class GameViewController: UIViewController {
     @objc func mainTimerCounter() {
         mainCount = mainCount + 1
                 
-        if(mainCount<=60){
-            print("남은 시간 : " + String(60-mainCount) + "초")
-//                   progressView.setProgress(progressView.progress - 0.0167, animated: true)
+        if(mainCount<=100){
+            print("남은 시간 : " + String(100-mainCount) + "초")
+            DispatchQueue.main.async { [self] in
+                gameTimerProgressView.setProgress(gameTimerProgressView.progress - 0.01, animated: true)
+            }
         } else {
             gameOver()
         }
@@ -265,12 +277,12 @@ class GameViewController: UIViewController {
         // 여기서는 타이머를 체크하고 시간이 지나면 손님 루프를 종료함
         customerCount += 1
         print("고객 타이머 : \(customerCount)")
-        if customerCount == 12 {
+        if customerCount == 15 {
             DispatchQueue.main.async {
                 self.angryImage.isHidden = false
             }
         }
-        if customerCount == 17 {
+        if customerCount == 20 {
             DispatchQueue.main.async {
                 self.angryImage.isHidden = true
                 self.customerViewHidden(true)
@@ -349,7 +361,7 @@ class GameViewController: UIViewController {
         let index: Int = receivedData["index"]!
         
         burnTimersCount[index] += 1
-        print("\(index+1)번 붕어빵 타는중 ------------------- \(burnTimersCount[index])")
+//        print("\(index+1)번 붕어빵 타는중 ------------------- \(burnTimersCount[index])")
         if burnTimersCount[index] == 5 {
             burnLoopSwitch[index] = false
             burnTimers[index].invalidate()
@@ -395,7 +407,7 @@ class GameViewController: UIViewController {
                         // 다 익음과 동시에 burn timer 시작
                         self.burnLoop(trayIndex)
                     })
-                    runLoop.run(until: Date().addingTimeInterval(10))
+                    runLoop.run(until: Date().addingTimeInterval(8))
                 }
                 
             }
@@ -412,7 +424,7 @@ class GameViewController: UIViewController {
                         self.currentTrayState[buttonKey] = .뒤집기3가능
                         self.burnLoop(trayIndex)
                     })
-                    runLoop.run(until: Date().addingTimeInterval(10))
+                    runLoop.run(until: Date().addingTimeInterval(8))
                 }
             }
         case .뒤집기3가능:
@@ -426,7 +438,7 @@ class GameViewController: UIViewController {
                         self.currentTrayState[buttonKey] = .뒤집기4가능
                         self.burnLoop(trayIndex)
                     })
-                    runLoop.run(until: Date().addingTimeInterval(10))
+                    runLoop.run(until: Date().addingTimeInterval(8))
                 }
             }
         case .뒤집기4가능:

@@ -247,14 +247,14 @@
                                                 </constraints>
                                             </imageView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xdi-7J-s8u" userLabel="말풍선">
-                                                <rect key="frame" x="0.0" y="15" width="207" height="103.5"/>
+                                                <rect key="frame" x="0.0" y="50" width="207" height="103.5"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="bubble.left.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="kOg-W1-MAq">
                                                         <rect key="frame" x="8" y="1" width="207" height="102.5"/>
                                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="붕어빵 n개 주세요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Oot-4p-JLk">
-                                                        <rect key="frame" x="40.5" y="41.5" width="126" height="20.5"/>
+                                                        <rect key="frame" x="40.5" y="36.5" width="126" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -266,7 +266,7 @@
                                                     <constraint firstItem="kOg-W1-MAq" firstAttribute="leading" secondItem="xdi-7J-s8u" secondAttribute="leading" id="3x8-XJ-HiO"/>
                                                     <constraint firstItem="Oot-4p-JLk" firstAttribute="centerX" secondItem="xdi-7J-s8u" secondAttribute="centerX" id="6Pk-Ox-ell"/>
                                                     <constraint firstItem="kOg-W1-MAq" firstAttribute="top" secondItem="xdi-7J-s8u" secondAttribute="top" id="DuD-S3-Pnd"/>
-                                                    <constraint firstItem="Oot-4p-JLk" firstAttribute="centerY" secondItem="xdi-7J-s8u" secondAttribute="centerY" id="bXf-EQ-umY"/>
+                                                    <constraint firstItem="Oot-4p-JLk" firstAttribute="centerY" secondItem="xdi-7J-s8u" secondAttribute="centerY" constant="-5" id="bXf-EQ-umY"/>
                                                     <constraint firstAttribute="width" secondItem="xdi-7J-s8u" secondAttribute="height" multiplier="2:1" id="ydh-Nv-9Z0"/>
                                                 </constraints>
                                             </view>
@@ -284,11 +284,16 @@
                                             <constraint firstAttribute="bottom" secondItem="FA8-mT-ylp" secondAttribute="bottom" id="Yt0-EE-VYP"/>
                                             <constraint firstItem="Igc-7m-sBz" firstAttribute="top" secondItem="FA8-mT-ylp" secondAttribute="top" constant="35" id="ZMb-9e-ef9"/>
                                             <constraint firstItem="FA8-mT-ylp" firstAttribute="leading" secondItem="7rg-ep-3PX" secondAttribute="leading" id="cxd-xz-GnO"/>
-                                            <constraint firstItem="xdi-7J-s8u" firstAttribute="top" secondItem="7rg-ep-3PX" secondAttribute="top" constant="15" id="hOn-cu-Cpi"/>
+                                            <constraint firstItem="xdi-7J-s8u" firstAttribute="top" secondItem="7rg-ep-3PX" secondAttribute="top" constant="50" id="hOn-cu-Cpi"/>
                                             <constraint firstAttribute="trailing" secondItem="xdi-7J-s8u" secondAttribute="trailing" id="rWJ-u0-a0g"/>
                                             <constraint firstItem="FA8-mT-ylp" firstAttribute="width" secondItem="7rg-ep-3PX" secondAttribute="width" id="wVj-El-TJa"/>
                                         </constraints>
                                     </view>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="1" translatesAutoresizingMaskIntoConstraints="NO" id="GnD-on-pCV" userLabel="전체시간 타이머">
+                                        <rect key="frame" x="20" y="10" width="216.5" height="4"/>
+                                        <color key="backgroundColor" systemColor="systemGrayColor"/>
+                                        <color key="tintColor" systemColor="linkColor"/>
+                                    </progressView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="붕어빵 누끼" translatesAutoresizingMaskIntoConstraints="NO" id="lre-gV-iGj">
                                         <rect key="frame" x="256.5" y="9.5" width="83" height="41"/>
                                         <constraints>
@@ -330,6 +335,7 @@
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="4ws-qR-YmN" secondAttribute="trailing" id="1qh-39-1FC"/>
                                     <constraint firstItem="lre-gV-iGj" firstAttribute="width" secondItem="ElD-l5-M37" secondAttribute="width" multiplier="0.2" id="4QF-KT-EcP"/>
+                                    <constraint firstItem="GnD-on-pCV" firstAttribute="top" secondItem="ElD-l5-M37" secondAttribute="top" constant="10" id="Bh8-Td-teP"/>
                                     <constraint firstItem="7rg-ep-3PX" firstAttribute="leading" secondItem="ElD-l5-M37" secondAttribute="leading" id="Cvc-yV-pv5"/>
                                     <constraint firstItem="ht1-0H-vme" firstAttribute="top" secondItem="ElD-l5-M37" secondAttribute="top" constant="15" id="NkW-a8-1AK"/>
                                     <constraint firstAttribute="bottom" secondItem="7rg-ep-3PX" secondAttribute="bottom" id="OUg-To-m4H"/>
@@ -337,6 +343,8 @@
                                     <constraint firstAttribute="trailing" secondItem="h10-P8-tao" secondAttribute="trailing" constant="20" id="XES-z7-2ck"/>
                                     <constraint firstItem="XMW-Qh-gmv" firstAttribute="leading" secondItem="7rg-ep-3PX" secondAttribute="trailing" id="Xqa-oJ-x9q"/>
                                     <constraint firstItem="7rg-ep-3PX" firstAttribute="top" secondItem="ElD-l5-M37" secondAttribute="top" id="YdE-iC-MGz"/>
+                                    <constraint firstItem="lre-gV-iGj" firstAttribute="leading" secondItem="GnD-on-pCV" secondAttribute="trailing" constant="20" id="Ytq-eD-mzQ"/>
+                                    <constraint firstItem="GnD-on-pCV" firstAttribute="leading" secondItem="ElD-l5-M37" secondAttribute="leading" constant="20" id="eI4-fa-JtN"/>
                                     <constraint firstItem="4ws-qR-YmN" firstAttribute="leading" secondItem="ElD-l5-M37" secondAttribute="leading" id="ecb-mC-CiR"/>
                                     <constraint firstAttribute="bottom" secondItem="4ws-qR-YmN" secondAttribute="bottom" id="jGW-JF-3yk"/>
                                     <constraint firstAttribute="trailing" secondItem="ht1-0H-vme" secondAttribute="trailing" constant="30" id="jLa-ai-p60"/>
@@ -648,6 +656,7 @@
                         <outlet property="doughImage" destination="C1K-nN-YxR" id="omd-eI-dbZ"/>
                         <outlet property="finishedBreadLabel" destination="ht1-0H-vme" id="rmi-QC-MZe"/>
                         <outlet property="forRadiusView" destination="h10-P8-tao" id="gtI-1o-5ip"/>
+                        <outlet property="gameTimerProgressView" destination="GnD-on-pCV" id="XBd-1G-p61"/>
                         <outlet property="handButton" destination="FmA-Xq-sTt" id="L0K-HB-hnz"/>
                         <outlet property="handImage" destination="bZy-3K-npY" id="QBj-ua-SBx"/>
                         <outlet property="heart1" destination="EuO-EC-6z6" id="vog-MH-Efl"/>
@@ -748,8 +757,14 @@
         <image name="주전자" width="142" height="140"/>
         <image name="첫화면 폰용" width="1490" height="1752"/>
         <image name="팥" width="150" height="130"/>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemIndigoColor">
             <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
