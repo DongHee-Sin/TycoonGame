@@ -327,6 +327,8 @@ class GameViewController: UIViewController {
     // 붕어빵이 다 익으면 작동할 타이머
     // 1번째 붕어빵 트레이면 매개변수로 0을 받도록 할것
     func burnLoop(_ index: Int) {
+        burnTimersCount[index] = 0
+        
         DispatchQueue.global().async { [self] in
             burnLoopSwitch[index] = true
             let runLoop = RunLoop.current
