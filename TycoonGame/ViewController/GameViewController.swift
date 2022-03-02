@@ -446,6 +446,11 @@ class GameViewController: UIViewController {
             }
         case .탐:
             if selectedIngredients == .손 {
+                currentTrayState[buttonKey] = .탄거확인
+                updateTrayImgae(state: .탄거확인, trayNumber: buttonKey)
+            }
+        case .탄거확인:
+            if selectedIngredients == .손 {
                 currentTrayState[buttonKey] = .비어있음
                 updateTrayImgae(state: .비어있음, trayNumber: buttonKey)
             }

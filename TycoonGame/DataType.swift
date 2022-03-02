@@ -28,5 +28,6 @@ enum TrayState: String {
     case 뒤집기2가능 = "2가능"
     case 뒤집기3가능 = "3가능"
     case 뒤집기4가능 = "4가능"
-    case 탐 = "붕어빵 탐.png"
+    case 탐 = "붕어빵 탐"
+    case 탄거확인 = "붕어빵 탐.png"
 }
