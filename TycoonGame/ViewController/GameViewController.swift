@@ -11,6 +11,12 @@ import UIKit
 
 class GameViewController: UIViewController {
     
+    // 난이도별 시간
+    var customerAngryTime: Int?
+    var customerLeaveTime: Int?
+    var breadBurnTime: Int?
+    
+    
     // MARK: - 전역변수
     // 남은 목숨과 스코어
     var heartPoint: Int = 3 {
@@ -180,6 +186,12 @@ class GameViewController: UIViewController {
         forRadiusView.layer.cornerRadius = 10
         forRadiusView.layer.borderColor = UIColor.systemPink.cgColor
         forRadiusView.layer.borderWidth = 1
+        
+        
+        // 재료 이미지에 border color 설정
+        doughImage.layer.borderColor = UIColor.systemBlue.cgColor
+        redBeanImage.layer.borderColor = UIColor.systemBlue.cgColor
+        handImage.layer.borderColor = UIColor.systemBlue.cgColor
     }
     
     
@@ -326,6 +338,7 @@ class GameViewController: UIViewController {
         // 손님이 사라질 때
         if to == true {
             Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { _ in
+                // 사라지고 2초 뒤 다시 등장
                 self.customerViewHidden(false)
             })
         }
@@ -373,11 +386,11 @@ class GameViewController: UIViewController {
         let index: Int = receivedData["index"]!
         
         burnTimersCount[index] += 1
-//        print("\(index+1)번 붕어빵 타는중 ------------------- \(burnTimersCount[index])")
         if burnTimersCount[index] == 5 {
             burnLoopSwitch[index] = false
             burnTimers[index].invalidate()
             currentTrayState[String(index+1)] = .탐
+            print("\(index+1)번 붕어빵 탔어요.")
         }
     }
     
@@ -529,7 +542,6 @@ class GameViewController: UIViewController {
     }
     func addBorderToImage(_ to: UIImageView) {
         to.layer.borderWidth = 2
-        to.layer.borderColor = UIColor.systemBlue.cgColor
     }
     
     
@@ -544,21 +556,4 @@ class GameViewController: UIViewController {
     func updateScore() {
         scoreLabel.text = String(score)
     }
-    
-    
-    // 손님이 화났다 (함수)
-//    func customerIsAngry() {
-//        DispatchQueue.main.async {
-//            self.angryImage.isHidden = false
-//        }
-//    }
-    
-    // 랜덤 주문수량 받아서 Label 업데이트 함수
-//    func updateOrderLabel() {
-//        DispatchQueue.main.async { [self] in
-//            orderCount = getRandomNumber()
-//            customerOrder.text = "붕어빵 \(orderCount!)개 주세요."
-//        }
-//    }
-
 }
