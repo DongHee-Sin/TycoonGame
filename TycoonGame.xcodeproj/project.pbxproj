@@ -17,6 +17,9 @@
 		D08139E727CE521100B00400 /* HowToViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08139E627CE521100B00400 /* HowToViewController.swift */; };
 		D0BF08C527CCABDE00650566 /* DataType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BF08C427CCABDE00650566 /* DataType.swift */; };
 		D0E7382327CE231700FBE6B7 /* GameResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E7382227CE231700FBE6B7 /* GameResultsViewController.swift */; };
+		D0EC31E027D2542B0079E692 /* 게임화면.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D0EC31DE27D2542B0079E692 /* 게임화면.mp3 */; };
+		D0EC31E127D2542B0079E692 /* 메인화면.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = D0EC31DF27D2542B0079E692 /* 메인화면.mp3 */; };
+		D0EC31E327D257CB0079E692 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0EC31E227D257CB0079E692 /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +35,9 @@
 		D08139E627CE521100B00400 /* HowToViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowToViewController.swift; sourceTree = "<group>"; };
 		D0BF08C427CCABDE00650566 /* DataType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataType.swift; sourceTree = "<group>"; };
 		D0E7382227CE231700FBE6B7 /* GameResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameResultsViewController.swift; sourceTree = "<group>"; };
+		D0EC31DE27D2542B0079E692 /* 게임화면.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "게임화면.mp3"; path = "../../../Downloads/사파리 다운로드/files (online-audio-converter/게임화면.mp3"; sourceTree = "<group>"; };
+		D0EC31DF27D2542B0079E692 /* 메인화면.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "메인화면.mp3"; path = "../../../Downloads/사파리 다운로드/files (online-audio-converter/메인화면.mp3"; sourceTree = "<group>"; };
+		D0EC31E227D257CB0079E692 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +77,8 @@
 				D0BF08C427CCABDE00650566 /* DataType.swift */,
 				D00347F227CBB38B00BC6868 /* Assets.xcassets */,
 				D00347F727CBB38B00BC6868 /* Info.plist */,
+				D0EC31DE27D2542B0079E692 /* 게임화면.mp3 */,
+				D0EC31DF27D2542B0079E692 /* 메인화면.mp3 */,
 			);
 			path = TycoonGame;
 			sourceTree = "<group>";
@@ -80,6 +88,7 @@
 			children = (
 				D00347ED27CBB38900BC6868 /* ViewController.swift */,
 				D04A030727CC762000E0FBD1 /* GameViewController.swift */,
+				D0EC31E227D257CB0079E692 /* MainViewController.swift */,
 				D0E7382227CE231700FBE6B7 /* GameResultsViewController.swift */,
 				D08139E627CE521100B00400 /* HowToViewController.swift */,
 			);
@@ -153,7 +162,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0EC31E127D2542B0079E692 /* 메인화면.mp3 in Resources */,
 				D00347F627CBB38B00BC6868 /* LaunchScreen.storyboard in Resources */,
+				D0EC31E027D2542B0079E692 /* 게임화면.mp3 in Resources */,
 				D00347F327CBB38B00BC6868 /* Assets.xcassets in Resources */,
 				D00347F127CBB38900BC6868 /* Main.storyboard in Resources */,
 			);
@@ -173,6 +184,7 @@
 				D00347EA27CBB38900BC6868 /* AppDelegate.swift in Sources */,
 				D08139E727CE521100B00400 /* HowToViewController.swift in Sources */,
 				D00347EC27CBB38900BC6868 /* SceneDelegate.swift in Sources */,
+				D0EC31E327D257CB0079E692 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

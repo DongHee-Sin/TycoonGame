@@ -192,6 +192,34 @@
                                     <constraint firstItem="fD9-C3-ueE" firstAttribute="trailing" secondItem="OhQ-4L-JPa" secondAttribute="trailing" id="yj4-um-nyV"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aav-f7-rKx" userLabel="음악제어">
+                                <rect key="frame" x="367.5" y="49" width="41.5" height="41.5"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="speaker" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="YQk-p5-UGv">
+                                        <rect key="frame" x="0.0" y="1.5" width="41.5" height="38.5"/>
+                                    </imageView>
+                                    <button opaque="NO" alpha="0.02" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j13-eY-a5T">
+                                        <rect key="frame" x="0.0" y="0.0" width="41.5" height="41.5"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain"/>
+                                        <connections>
+                                            <action selector="didTouchedMusicButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Jvr-4W-4m3"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="tertiarySystemGroupedBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="YQk-p5-UGv" secondAttribute="trailing" id="2AO-Nf-wJX"/>
+                                    <constraint firstAttribute="trailing" secondItem="j13-eY-a5T" secondAttribute="trailing" id="2jH-ke-Z55"/>
+                                    <constraint firstAttribute="width" secondItem="aav-f7-rKx" secondAttribute="height" multiplier="1:1" id="4sy-1g-3Kq"/>
+                                    <constraint firstItem="YQk-p5-UGv" firstAttribute="leading" secondItem="aav-f7-rKx" secondAttribute="leading" id="5pu-sp-2Xf"/>
+                                    <constraint firstItem="j13-eY-a5T" firstAttribute="top" secondItem="aav-f7-rKx" secondAttribute="top" id="6td-Wk-PdV"/>
+                                    <constraint firstAttribute="bottom" secondItem="j13-eY-a5T" secondAttribute="bottom" id="H0F-Bh-NVk"/>
+                                    <constraint firstItem="YQk-p5-UGv" firstAttribute="top" secondItem="aav-f7-rKx" secondAttribute="top" id="NCm-lm-SnL"/>
+                                    <constraint firstItem="j13-eY-a5T" firstAttribute="leading" secondItem="aav-f7-rKx" secondAttribute="leading" id="PRE-S2-K6I"/>
+                                    <constraint firstAttribute="bottom" secondItem="YQk-p5-UGv" secondAttribute="bottom" id="oPP-D3-nSJ"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -200,7 +228,10 @@
                             <constraint firstItem="ZHS-xI-NjR" firstAttribute="top" secondItem="0RC-qQ-1s2" secondAttribute="bottom" id="99h-H5-GiZ"/>
                             <constraint firstItem="TDr-3c-VVP" firstAttribute="top" secondItem="0RC-qQ-1s2" secondAttribute="bottom" id="Hho-Qu-v3i"/>
                             <constraint firstItem="TDr-3c-VVP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Mw7-Vr-ch9"/>
+                            <constraint firstItem="aav-f7-rKx" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="5" id="Vf1-mb-6Ik"/>
                             <constraint firstItem="fD9-C3-ueE" firstAttribute="top" secondItem="0RC-qQ-1s2" secondAttribute="bottom" id="Ws0-ue-GL0"/>
+                            <constraint firstItem="aav-f7-rKx" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" multiplier="0.1" id="Zz4-B8-Svl"/>
+                            <constraint firstItem="aav-f7-rKx" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-5" id="c0H-tY-hyP"/>
                             <constraint firstItem="0RC-qQ-1s2" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="gkW-PF-XvI"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="0RC-qQ-1s2" secondAttribute="trailing" id="hws-x3-dFG"/>
                             <constraint firstItem="0RC-qQ-1s2" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="kT2-JJ-ehG"/>
@@ -212,6 +243,8 @@
                         <outlet property="hardLabel" destination="rLe-yj-KIa" id="ec8-kM-Du6"/>
                         <outlet property="howToButton" destination="W8t-2S-SMK" id="3wg-qf-zmW"/>
                         <outlet property="howToUIView" destination="toH-oL-5gs" id="V23-EB-Y9Q"/>
+                        <outlet property="musicControlButton" destination="j13-eY-a5T" id="hH8-Lu-jkz"/>
+                        <outlet property="musicImage" destination="YQk-p5-UGv" id="Dzg-zJ-YVe"/>
                         <outlet property="normalLabel" destination="i7C-iG-LF3" id="20N-O8-OXG"/>
                         <outlet property="startButton" destination="AEd-df-AdI" id="df9-P6-HKX"/>
                         <outlet property="startUIView" destination="OhQ-4L-JPa" id="VgS-6s-KsW"/>
@@ -846,6 +879,7 @@
         <image name="bubble.left.fill" catalog="system" width="128" height="110"/>
         <image name="heart.fill" catalog="system" width="128" height="109"/>
         <image name="howto" width="1295" height="921"/>
+        <image name="speaker" catalog="system" width="128" height="124"/>
         <image name="timer" catalog="system" width="128" height="121"/>
         <image name="게임결과화면" width="719" height="1032"/>
         <image name="남자" width="354" height="324"/>
@@ -872,6 +906,9 @@
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tertiarySystemGroupedBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

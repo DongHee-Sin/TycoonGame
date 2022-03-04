@@ -5,11 +5,19 @@
 //  Created by 신동희 on 2022/02/28.
 //
 
-import Foundation
 import UIKit
+import AVFoundation
 
-
-class GameViewController: UIViewController {
+class GameViewController: MainViewController {
+    
+    // 오디오가 재생중인지 확인
+    var isMusicPlay: Bool?
+    
+    // 오디오 플레이어 선언
+//    var player = AVAudioPlayer()
+//
+//    let url = Bundle.main.url(forResource: "게임화면", withExtension: "mp3")!
+    
     
     // 난이도별 시간
     var customerAngryTime: Int?
@@ -194,6 +202,19 @@ class GameViewController: UIViewController {
         doughImage.layer.borderColor = UIColor.systemBlue.cgColor
         redBeanImage.layer.borderColor = UIColor.systemBlue.cgColor
         handImage.layer.borderColor = UIColor.systemBlue.cgColor
+        
+        
+        if isMusicPlay! {
+            // 오디오 설정
+            do {
+                try player = AVAudioPlayer(contentsOf: url2)
+            }catch {
+                fatalError()
+            }
+            playerOn()
+        }else {
+            playerOff()
+        }
     }
     
     
@@ -212,8 +233,27 @@ class GameViewController: UIViewController {
     
     
     
+    // MARK: - View Did Disappear
+    override func viewWillDisappear(_ animated: Bool) {
+        playerOff()
+    }
+    
+    
+    
+    
     
     // MARK: - 함수
+    
+    // 오디오 on/off 함수
+//    func playerOn() {
+//        player.numberOfLoops = -1
+//        player.prepareToPlay()
+//        player.play()
+//    }
+//    func playerOff() {
+//        player.pause()
+//    }
+    
     
     
     // 게임 종료하는 함수
@@ -252,8 +292,7 @@ class GameViewController: UIViewController {
         mainCount = mainCount + 1
                 
         if(mainCount<=100){
-            print("남은 시간 : " + String(100-mainCount) + "초")
-            //
+//            print("남은 시간 : " + String(100-mainCount) + "초")
             DispatchQueue.main.async { [self] in
                 gameTimerProgressView.setProgress(gameTimerProgressView.progress - 0.01, animated: true)
             }
@@ -433,7 +472,7 @@ class GameViewController: UIViewController {
                     let runLoop = RunLoop.current
                     Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { _ in
                         self.currentTrayState[buttonKey] = .뒤집기2가능
-                        // 다 익음과 동시에 burn timer 시작
+                        // 다 익으면 동시에 burn timer 시작
                         self.burnLoop(trayIndex)
                     })
                     runLoop.run(until: Date().addingTimeInterval(8))

@@ -6,13 +6,35 @@
 //
 
 import UIKit
+import AVFoundation
 
-class ViewController: UIViewController {
+class ViewController: MainViewController {
+    
+    // 오디오 플레이어 선언
+//    var player = AVAudioPlayer()
+//
+//    let url = Bundle.main.url(forResource: "메인화면", withExtension: "mp3")!
     
     
     // MARK: - UI연결
     
-    // 시작버튼
+    // 노래 on/off 버튼
+    @IBOutlet weak var musicImage: UIImageView!
+    @IBOutlet weak var musicControlButton: UIButton!
+    @IBAction func didTouchedMusicButton(_ sender: UIButton) {
+        sender.isSelected = !sender.isSelected
+        
+        if sender.isSelected {
+            playerOn()
+            musicImage.image = UIImage(systemName: "speaker")
+        }else {
+            playerOff()
+            musicImage.image = UIImage(systemName: "speaker.slash")
+        }
+    }
+    
+    
+    // 게임시작 버튼
     @IBOutlet weak var startUIView: UIView!
     @IBOutlet weak var startButton: UIButton!
     
@@ -48,7 +70,7 @@ class ViewController: UIViewController {
     
     
     
-
+    // MARK: - View Did Load
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,7 +81,24 @@ class ViewController: UIViewController {
         // 게임시작 버튼 UI 설정
         viewSetting(startUIView)
         viewSetting(howToUIView)
+        
     }
+    
+    
+    // MARK: - View Did Appear
+    override func viewDidAppear(_ animated: Bool) {
+        // 오디오 설정
+        do {
+            try player = AVAudioPlayer(contentsOf: url)
+        }catch {
+            fatalError()
+        }
+                
+        playerOn()
+    }
+    
+    
+    
 
 
     @objc func didTouchedStartButton() {
@@ -69,6 +108,9 @@ class ViewController: UIViewController {
         gameVC.customerAngryTime = self.customerAngryTime
         gameVC.customerLeaveTime = self.customerLeaveTime
         gameVC.breadBurnTime = self.breadBurnTime
+        gameVC.isMusicPlay = self.musicControlButton.isSelected
+        
+        playerOff()
         
         self.present(gameVC, animated: true, completion: nil)
     }
@@ -87,5 +129,15 @@ class ViewController: UIViewController {
         view.layer.borderColor = UIColor.systemPink.cgColor
         view.layer.cornerRadius = 30
     }
+    
+    
+//    func playerOn() {
+//        player.numberOfLoops = -1
+//        player.prepareToPlay()
+//        player.play()
+//    }
+//
+//    func playerOff() {
+//        player.pause()
+//    }
 }
-
