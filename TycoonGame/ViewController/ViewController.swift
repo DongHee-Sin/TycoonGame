@@ -12,18 +12,47 @@ class ViewController: UIViewController {
     
     // MARK: - UI연결
     
+    // 시작버튼
     @IBOutlet weak var startUIView: UIView!
     @IBOutlet weak var startButton: UIButton!
     
+    // how to 버튼
     @IBOutlet weak var howToUIView: UIView!
     @IBOutlet weak var howToButton: UIButton!
+    
+    
+    // 난이도 조절
+    var customerAngryTime: Int = 15
+    var customerLeaveTime: Int = 20
+    var breadBurnTime: Int = 5
+    
+    @IBOutlet weak var normalLabel: UILabel!
+    @IBOutlet weak var hardLabel: UILabel!
+    @IBAction func difficultyControl(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case  0:
+            normalLabel.textColor = UIColor.link
+            hardLabel.textColor = UIColor.darkGray
+            customerAngryTime = 15
+            customerLeaveTime = 20
+            breadBurnTime = 5
+        default:
+            normalLabel.textColor = UIColor.darkGray
+            hardLabel.textColor = UIColor.link
+            customerAngryTime = 13
+            customerLeaveTime = 18
+            breadBurnTime = 2
+        }
+    }
+    
+    
     
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 게임시작 버튼 addTarget
+        // 버튼 addTarget
         startButton.addTarget(self, action: #selector(didTouchedStartButton), for: .touchUpInside)
         howToButton.addTarget(self, action: #selector(didTouchedHowToButton), for: .touchUpInside)
         
@@ -37,6 +66,10 @@ class ViewController: UIViewController {
         guard let gameVC = storyboard?.instantiateViewController(withIdentifier: "GameViewController") as? GameViewController else {
             return
         }
+        gameVC.customerAngryTime = self.customerAngryTime
+        gameVC.customerLeaveTime = self.customerLeaveTime
+        gameVC.breadBurnTime = self.breadBurnTime
+        
         self.present(gameVC, animated: true, completion: nil)
     }
     

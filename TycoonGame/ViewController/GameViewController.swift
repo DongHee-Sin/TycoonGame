@@ -301,12 +301,12 @@ class GameViewController: UIViewController {
         // 여기서는 타이머를 체크하고 시간이 지나면 손님 루프를 종료함
         customerCount += 1
 //        print("고객 타이머 : \(customerCount)")
-        if customerCount == 15 {
+        if customerCount == customerAngryTime {
             DispatchQueue.main.async {
                 self.angryImage.isHidden = false
             }
         }
-        if customerCount == 20 {
+        if customerCount == customerLeaveTime {
             DispatchQueue.main.async {
                 self.angryImage.isHidden = true
                 self.customerViewHidden(true)
@@ -386,7 +386,7 @@ class GameViewController: UIViewController {
         let index: Int = receivedData["index"]!
         
         burnTimersCount[index] += 1
-        if burnTimersCount[index] == 5 {
+        if burnTimersCount[index] == breadBurnTime {
             burnLoopSwitch[index] = false
             burnTimers[index].invalidate()
             currentTrayState[String(index+1)] = .탐
