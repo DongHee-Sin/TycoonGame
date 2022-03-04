@@ -83,6 +83,8 @@ class GameViewController: UIViewController {
     @IBOutlet weak var customerUIView: UIView!
     @IBOutlet weak var customerOrder: UILabel!
     @IBOutlet weak var angryImage: UIImageView!
+    @IBOutlet weak var customerImage: UIImageView!
+    
     
     
     // 붕어빵 틀 버튼
@@ -304,6 +306,7 @@ class GameViewController: UIViewController {
         if customerCount == customerAngryTime {
             DispatchQueue.main.async {
                 self.angryImage.isHidden = false
+                self.customerImage.image = UIImage(named: "화난남자.png")
             }
         }
         if customerCount == customerLeaveTime {
@@ -330,6 +333,7 @@ class GameViewController: UIViewController {
         customerUIView.isHidden = to
         // 손님이 등장할 때
         if to == false {
+            self.customerImage.image = UIImage(named: "남자.png")
             customerCount = 0
             orderCount = getRandomNumber()
             customerOrder.text = "붕어빵 \(orderCount!)개 주세요."

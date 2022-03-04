@@ -350,14 +350,14 @@
                                                 </constraints>
                                             </view>
                                             <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="빠직 누끼" translatesAutoresizingMaskIntoConstraints="NO" id="Igc-7m-sBz">
-                                                <rect key="frame" x="95" y="166" width="62" height="62"/>
+                                                <rect key="frame" x="105" y="166" width="62" height="62"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="Igc-7m-sBz" secondAttribute="height" multiplier="1:1" id="yri-lg-9Q4"/>
                                                 </constraints>
                                             </imageView>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstItem="Igc-7m-sBz" firstAttribute="trailing" secondItem="FA8-mT-ylp" secondAttribute="trailing" constant="-50" id="CSk-rs-qxy"/>
+                                            <constraint firstItem="Igc-7m-sBz" firstAttribute="trailing" secondItem="FA8-mT-ylp" secondAttribute="trailing" constant="-40" id="CSk-rs-qxy"/>
                                             <constraint firstItem="Igc-7m-sBz" firstAttribute="width" secondItem="FA8-mT-ylp" secondAttribute="width" multiplier="0.3" id="NRP-tc-HrC"/>
                                             <constraint firstItem="xdi-7J-s8u" firstAttribute="leading" secondItem="7rg-ep-3PX" secondAttribute="leading" id="Sq1-zb-a0K"/>
                                             <constraint firstAttribute="bottom" secondItem="FA8-mT-ylp" secondAttribute="bottom" id="Yt0-EE-VYP"/>
@@ -747,6 +747,7 @@
                         <outlet property="button4" destination="0wM-WQ-Ys5" id="hr9-MH-fje"/>
                         <outlet property="button5" destination="z0o-hb-7Mr" id="lc3-uz-PO8"/>
                         <outlet property="button6" destination="bl5-r7-Qk4" id="MIN-ye-1H1"/>
+                        <outlet property="customerImage" destination="FA8-mT-ylp" id="Bb6-do-h6s"/>
                         <outlet property="customerOrder" destination="Oot-4p-JLk" id="TWi-wV-T1e"/>
                         <outlet property="customerUIView" destination="7rg-ep-3PX" id="BsR-nQ-WIe"/>
                         <outlet property="doughButton" destination="YiA-DG-odz" id="Bqo-cV-xgL"/>

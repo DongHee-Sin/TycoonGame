@@ -33,13 +33,13 @@ class ViewController: UIViewController {
         case  0:
             normalLabel.textColor = UIColor.link
             hardLabel.textColor = UIColor.darkGray
-            customerAngryTime = 15
+            customerAngryTime = 14
             customerLeaveTime = 20
             breadBurnTime = 5
         default:
             normalLabel.textColor = UIColor.darkGray
             hardLabel.textColor = UIColor.link
-            customerAngryTime = 13
+            customerAngryTime = 12
             customerLeaveTime = 18
             breadBurnTime = 2
         }
