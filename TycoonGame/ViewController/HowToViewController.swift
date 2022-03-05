@@ -10,6 +10,7 @@ import UIKit
 
 class HowToViewController: UIViewController {
     
+    // 메인화면으로 돌아가기 버튼
     @IBAction func menuButton(_ sender: UIButton) {
         dismiss(animated: true, completion: nil)
     }   

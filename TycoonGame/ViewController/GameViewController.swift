@@ -64,14 +64,14 @@ class GameViewController: MainViewController {
     var selectedIngredients: Ingredients?
     
     
-    // Dispatch Queue
+    // global Queue
     let globalQueue = DispatchQueue.global()
     
     
     
     // MARK: - UI 연결
     
-    // 하트 이미지
+    // 목숨(하트) 이미지
     @IBOutlet weak var heart1: UIImageView!
     @IBOutlet weak var heart2: UIImageView!
     @IBOutlet weak var heart3: UIImageView!
@@ -81,7 +81,8 @@ class GameViewController: MainViewController {
     // 전체시간 타이머 : progress view
     @IBOutlet weak var gameTimerProgressView: UIProgressView!
     
-    // 게임 START 이미지
+    
+    // 게임 START 이미지 (첫 시작할 때 보여지는 이미지)
     @IBOutlet weak var gameStartImage: UIImageView!
     
     
@@ -101,6 +102,14 @@ class GameViewController: MainViewController {
     @IBOutlet weak var button5: UIButton!
     @IBOutlet weak var button6: UIButton!
     
+    // 붕어빵 틀 이미지
+    @IBOutlet weak var image1: UIImageView!
+    @IBOutlet weak var image2: UIImageView!
+    @IBOutlet weak var image3: UIImageView!
+    @IBOutlet weak var image4: UIImageView!
+    @IBOutlet weak var image5: UIImageView!
+    @IBOutlet weak var image6: UIImageView!
+    
     
     // 재료 버튼
     @IBOutlet weak var doughButton: UIButton!
@@ -112,15 +121,6 @@ class GameViewController: MainViewController {
     @IBOutlet weak var redBeanImage: UIImageView!
     @IBOutlet weak var handImage: UIImageView!
     
-    
-    
-    // 붕어빵 틀 이미지
-    @IBOutlet weak var image1: UIImageView!
-    @IBOutlet weak var image2: UIImageView!
-    @IBOutlet weak var image3: UIImageView!
-    @IBOutlet weak var image4: UIImageView!
-    @IBOutlet weak var image5: UIImageView!
-    @IBOutlet weak var image6: UIImageView!
     
     
     // 완성된 붕어빵 개수
@@ -148,10 +148,14 @@ class GameViewController: MainViewController {
             customerTimer.invalidate()
             customerLoopSwitch = false
             
-            // 화난 표시 히든
+            // 화난 표시 히든 (빠직 이미지)
             DispatchQueue.main.async {
                 self.angryImage.isHidden = true
             }
+        }else {
+            // 붕어빵이 부족한데 지급버튼 누르면 -100점
+            score -= 100
+            updateScore()
         }
     }
 
@@ -161,10 +165,6 @@ class GameViewController: MainViewController {
     // MARK: - View Did Load
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // START 이미지 히든 false
-        gameStartImage.isHidden = false
-        
         
         // burnTimer들 배열로 저장
         burnTimers = [burnTimer1, burnTimer2, burnTimer3, burnTimer4, burnTimer5, burnTimer6]
@@ -232,6 +232,7 @@ class GameViewController: MainViewController {
     
     
     // MARK: - View Did Disappear
+    // 게임이 종료되면 게임화면 음악을 off함
     override func viewWillDisappear(_ animated: Bool) {
         playerOff()
     }
@@ -252,11 +253,9 @@ class GameViewController: MainViewController {
         customerTimer.invalidate()
         customerLoopSwitch = false
         
+        print("게임 종료 🤪")
         
-        
-        
-        print("게임 종료")
-        
+        // gameOver함수가 글로벌 큐 쓰레드에서 호출되기 때문에 뷰 전환 내용은 메인큐로 보내서 실행해줌
         DispatchQueue.main.async {
             guard let resultVC = self.storyboard?.instantiateViewController(withIdentifier: "GameResultViewContoller") as? GameResultViewContoller else {
                 return
@@ -269,27 +268,9 @@ class GameViewController: MainViewController {
     
     
     
-    // 메인(게임) 타이머
-    var mainTimer: Timer = Timer()
-    var mainCount: Int = 0
-    var mainTimerSwitch: Bool = false
-    
-    @objc func mainTimerCounter() {
-        mainCount = mainCount + 1
-                
-        if(mainCount<=100){
-//            print("남은 시간 : " + String(100-mainCount) + "초")
-            DispatchQueue.main.async { [self] in
-                gameTimerProgressView.setProgress(gameTimerProgressView.progress - 0.01, animated: true)
-            }
-        } else {
-            gameOver()
-        }
-    }
-        
     //메인 루프
     func mainLoop() {
-        DispatchQueue.global().async { [self] in
+        globalQueue.async { [self] in
             mainTimerSwitch = true
             let runLoop = RunLoop.current
             mainTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(mainTimerCounter), userInfo: nil,repeats: true)
@@ -301,6 +282,22 @@ class GameViewController: MainViewController {
         }
     }
     
+    // 메인(게임) 타이머
+    var mainTimer: Timer = Timer()
+    var mainCount: Int = 0
+    var mainTimerSwitch: Bool = false
+    
+    @objc func mainTimerCounter() {
+        mainCount = mainCount + 1
+                
+        if(mainCount<=100){
+            DispatchQueue.main.async { [self] in
+                gameTimerProgressView.setProgress(gameTimerProgressView.progress - 0.01, animated: true)
+            }
+        } else {
+            gameOver()
+        }
+    }
     
     
     
@@ -310,7 +307,7 @@ class GameViewController: MainViewController {
     var customerLoopSwitch: Bool = false
     
     func customerLoop() {
-        DispatchQueue.global().async { [self] in
+        globalQueue.async { [self] in
             customerLoopSwitch = heartPoint >= 1 ? true : false
             let runLoop = RunLoop.current
             customerTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(customerTimerCounter), userInfo: nil, repeats: true)
@@ -320,7 +317,6 @@ class GameViewController: MainViewController {
             }
         }
     }
-    
     
     // 손님 루프 함수
     @objc func customerTimerCounter() {
@@ -348,7 +344,6 @@ class GameViewController: MainViewController {
             }
         }
     }
-    
     
     
     
@@ -394,7 +389,7 @@ class GameViewController: MainViewController {
     func burnLoop(_ index: Int) {
         burnTimersCount[index] = 0
         
-        DispatchQueue.global().async { [self] in
+        globalQueue.async { [self] in
             burnLoopSwitch[index] = true
             let runLoop = RunLoop.current
             
@@ -406,7 +401,7 @@ class GameViewController: MainViewController {
         }
     }
     
-    // 타는지 여부 확인할 타이머
+    // 타는지 여부 확인할 타이머 카운터
     @objc func burnTimerCounter(_ timer: Timer) {
         guard let receivedData = timer.userInfo as? Dictionary<String, Int> else {
             return
@@ -430,14 +425,16 @@ class GameViewController: MainViewController {
     
     
     
-    // 붕어빵 틀 눌리는 버튼
+    // 붕어빵 틀 눌리면 동작할 함수
     @objc func didTouchedTrayButton(_ sender: UIButton) {
+        // 눌린 버튼(sender)의 titleLabel을 가져와서 눌린 붕어빵 틀 정보 저장
         let buttonKey: String = (sender.titleLabel?.text)!
         let trayIndex: Int = Int(buttonKey)! - 1
         
         // 현재 붕어빵 틀의 상태를 가져옴
         let trayState: TrayState = currentTrayState[buttonKey]!
         
+        // 현재 붕어빵 틀 상태로 조건문 돌리기
         switch trayState {
         case .비어있음:
             if selectedIngredients == .반죽 {
@@ -456,6 +453,7 @@ class GameViewController: MainViewController {
                 globalQueue.async {
                     let runLoop = RunLoop.current
                     Timer.scheduledTimer(withTimeInterval: 2, repeats: false, block: { _ in
+                        // 뒤집고 2초 후 붕어빵 틀 상태 변경
                         self.currentTrayState[buttonKey] = .뒤집기2가능
                         // 다 익으면 동시에 burn timer 시작
                         self.burnLoop(trayIndex)
@@ -525,7 +523,8 @@ class GameViewController: MainViewController {
     }
     
     
-    // 붕어빵 틀 이미지 변경하는 함수
+    
+    // 붕어빵 틀 이미지 업데이트하는 함수
     func updateTrayImgae(state: TrayState, trayNumber: String) {
         switch trayNumber {
         case "1":
@@ -545,8 +544,7 @@ class GameViewController: MainViewController {
         }
     }
     
-    
-    
+
     
     // 재료 선택 버튼
     @objc func didTouchedIngredientsButton(_ sender: UIButton) {
@@ -563,11 +561,13 @@ class GameViewController: MainViewController {
             addBorderToImage(handImage)
         }
     }
+    // borderWidth 초기화
     func imageBorderCancel() {
         doughImage.layer.borderWidth = 0
         redBeanImage.layer.borderWidth = 0
         handImage.layer.borderWidth = 0
     }
+    // 이미지뷰에 borderWidth 2 설정하는 함수
     func addBorderToImage(_ to: UIImageView) {
         to.layer.borderWidth = 2
     }
