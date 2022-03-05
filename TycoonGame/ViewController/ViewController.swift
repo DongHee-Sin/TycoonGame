@@ -10,12 +10,6 @@ import AVFoundation
 
 class ViewController: MainViewController {
     
-    // 오디오 플레이어 선언
-//    var player = AVAudioPlayer()
-//
-//    let url = Bundle.main.url(forResource: "메인화면", withExtension: "mp3")!
-    
-    
     // MARK: - UI연결
     
     // 노래 on/off 버튼
@@ -43,11 +37,12 @@ class ViewController: MainViewController {
     @IBOutlet weak var howToButton: UIButton!
     
     
-    // 난이도 조절
+    // 난이도 조절에 필요한 변수
     var customerAngryTime: Int = 15
     var customerLeaveTime: Int = 20
     var breadBurnTime: Int = 5
     
+    // 난이도 조절 segment countrol
     @IBOutlet weak var normalLabel: UILabel!
     @IBOutlet weak var hardLabel: UILabel!
     @IBAction func difficultyControl(_ sender: UISegmentedControl) {
@@ -74,7 +69,7 @@ class ViewController: MainViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 버튼 addTarget
+        // 시작버튼, 설명버튼 addTarget
         startButton.addTarget(self, action: #selector(didTouchedStartButton), for: .touchUpInside)
         howToButton.addTarget(self, action: #selector(didTouchedHowToButton), for: .touchUpInside)
         
@@ -87,34 +82,40 @@ class ViewController: MainViewController {
     
     // MARK: - View Did Appear
     override func viewDidAppear(_ animated: Bool) {
-        // 오디오 설정
-        do {
-            try player = AVAudioPlayer(contentsOf: url)
-        }catch {
-            fatalError()
+        // 노래 컨트롤 버튼이 selected상태인 경우에만(소리on 상태에서만) 노래를 다시 재생
+        if musicControlButton.isSelected {
+            // 오디오 설정
+            do {
+                try player = AVAudioPlayer(contentsOf: url)
+            }catch {
+                fatalError()
+            }
+                    
+            playerOn()
         }
-                
-        playerOn()
     }
     
     
     
 
-
+    // 시작버튼 눌렸을 때 동작할 함수
     @objc func didTouchedStartButton() {
         guard let gameVC = storyboard?.instantiateViewController(withIdentifier: "GameViewController") as? GameViewController else {
             return
         }
+        // 난이도 조절에 필요한 변수와 노래가 재생중인지 여부를 알려주는 변수를 전달
         gameVC.customerAngryTime = self.customerAngryTime
         gameVC.customerLeaveTime = self.customerLeaveTime
         gameVC.breadBurnTime = self.breadBurnTime
         gameVC.isMusicPlay = self.musicControlButton.isSelected
         
+        // 메인화면에서 재생중이던 노래 off
         playerOff()
         
         self.present(gameVC, animated: true, completion: nil)
     }
     
+    // how to 버튼이 눌렸을 때 동작할 함수
     @objc func didTouchedHowToButton() {
         guard let howToVC = storyboard?.instantiateViewController(withIdentifier: "HowToViewController") as? HowToViewController else {
             return
@@ -123,21 +124,10 @@ class ViewController: MainViewController {
         self.present(howToVC, animated: true, completion: nil)
     }
     
-    
+    // 게임시작, howto버튼들 UI 설정 (테두리, radius)
     func viewSetting(_ view: UIView) {
         view.layer.borderWidth = 3
         view.layer.borderColor = UIColor.systemPink.cgColor
         view.layer.cornerRadius = 30
     }
-    
-    
-//    func playerOn() {
-//        player.numberOfLoops = -1
-//        player.prepareToPlay()
-//        player.play()
-//    }
-//
-//    func playerOff() {
-//        player.pause()
-//    }
 }

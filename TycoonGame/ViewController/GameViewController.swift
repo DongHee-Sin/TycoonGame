@@ -12,12 +12,7 @@ class GameViewController: MainViewController {
     
     // 오디오가 재생중인지 확인
     var isMusicPlay: Bool?
-    
-    // 오디오 플레이어 선언
-//    var player = AVAudioPlayer()
-//
-//    let url = Bundle.main.url(forResource: "게임화면", withExtension: "mp3")!
-    
+        
     
     // 난이도별 시간
     var customerAngryTime: Int?
@@ -26,7 +21,8 @@ class GameViewController: MainViewController {
     
     
     // MARK: - 전역변수
-    // 남은 목숨과 스코어
+    
+    // 남은 목숨 : 프로퍼티 감시자로 목숨이 떨어지면 UI에 반영
     var heartPoint: Int = 3 {
         willSet {
             DispatchQueue.main.async { [self] in
@@ -42,6 +38,8 @@ class GameViewController: MainViewController {
             }
         }
     }
+    
+    // 점수
     var score: Int = 0
     
     // 고객이 주문한 붕어빵 수량
@@ -202,8 +200,14 @@ class GameViewController: MainViewController {
         doughImage.layer.borderColor = UIColor.systemBlue.cgColor
         redBeanImage.layer.borderColor = UIColor.systemBlue.cgColor
         handImage.layer.borderColor = UIColor.systemBlue.cgColor
-        
-        
+    }
+    
+    
+
+    
+    // MARK: - View Did Appear
+    override func viewDidAppear(_ animated: Bool) {
+        // 음악on 상태에서만 오디오 설정
         if isMusicPlay! {
             // 오디오 설정
             do {
@@ -215,13 +219,7 @@ class GameViewController: MainViewController {
         }else {
             playerOff()
         }
-    }
-    
-    
-
-    
-    // MARK: - View Did Appear
-    override func viewDidAppear(_ animated: Bool) {
+        
         // 1초 뒤 게임시작
         sleep(1)
         customerViewHidden(false)
@@ -243,18 +241,6 @@ class GameViewController: MainViewController {
     
     
     // MARK: - 함수
-    
-    // 오디오 on/off 함수
-//    func playerOn() {
-//        player.numberOfLoops = -1
-//        player.prepareToPlay()
-//        player.play()
-//    }
-//    func playerOff() {
-//        player.pause()
-//    }
-    
-    
     
     // 게임 종료하는 함수
     func gameOver() {
@@ -307,7 +293,6 @@ class GameViewController: MainViewController {
             mainTimerSwitch = true
             let runLoop = RunLoop.current
             mainTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(mainTimerCounter), userInfo: nil,repeats: true)
-    //        customerTimer = Timer.scheduledTimer(timeInterval: 20, target: self, selector: #selector(customerLoop), userInfo: nil, repeats: true)
             
             
             while mainTimerSwitch {
