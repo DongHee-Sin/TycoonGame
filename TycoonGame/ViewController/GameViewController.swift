@@ -389,13 +389,16 @@ class GameViewController: MainViewController {
     func burnLoop(_ index: Int) {
         burnTimersCount[index] = 0
         
-        globalQueue.async { [self] in
-            burnLoopSwitch[index] = true
+        globalQueue.async { [weak self] in
+            guard let self = self else {
+                return
+            }
+            self.burnLoopSwitch[index] = true
             let runLoop = RunLoop.current
             
-            burnTimers[index] = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(burnTimerCounter(_:)), userInfo: ["index": index], repeats: true)
+            self.burnTimers[index] = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(self.burnTimerCounter(_:)), userInfo: ["index": index], repeats: true)
             
-            while burnLoopSwitch[index] {
+            while self.burnLoopSwitch[index] {
                 runLoop.run(until: Date().addingTimeInterval(0.1))
             }
         }
