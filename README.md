@@ -1,6 +1,7 @@
 # 라이징캠프 4주차 과제
 #### 구현한 게임 : 붕어빵 타이쿤 게임
 #### 기간: 2022/02/26 ~ 2022/03/05
+[실행영상](https://drive.google.com/file/d/1ZVAJojz6EzQz_ZcATr9ypnd0KbYvXJoR/view?usp=sharing)
 
 <br/>
 
